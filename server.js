@@ -6,6 +6,7 @@ const app = express();
 
 const CONTENT = path.join(__dirname, 'content');
 
+//one of the main functions to get the object from the content folder
 function getObject(id) {
   const dir = path.join(CONTENT, id);
 
@@ -26,6 +27,7 @@ function getObject(id) {
   };
 }
 
+//ROUTES
 app.get('/model/:id', (req, res) => {
   const object = getObject(req.params.id);
 
@@ -47,6 +49,7 @@ app.get('/model/:id', (req, res) => {
   `);
 });
 
+
 app.get('/api/:id', (req, res) => {
   const object = getObject(req.params.id);
 
@@ -56,6 +59,7 @@ app.get('/api/:id', (req, res) => {
 
   res.json(object.data);
 });
+
 
 app.get('/md/:id', (req, res) => {
   const object = getObject(req.params.id);
@@ -67,9 +71,11 @@ app.get('/md/:id', (req, res) => {
   res.type('text/markdown').send(object.markdown);
 });
 
+// Serve static files from the "public" directory
 app.use(express.static(path.join(__dirname, 'public')));
 
 
+//SERVER STARTS ETX
 
 const PORT = process.env.PORT || 9000;
 
@@ -79,6 +85,6 @@ if (!process.env.VERCEL) {
   });
 }
 
-
+// Export the app for Vercel deployment
 module.exports = app;
 
