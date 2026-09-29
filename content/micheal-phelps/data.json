@@ -1,0 +1,9 @@
+{
+    "name": "Michael Phelps",
+    "type": "person",
+    "related": [
+      "/api/us-swimming",
+      "/api/olympics",
+      "/api/beijing-2008"
+    ]
+  }
