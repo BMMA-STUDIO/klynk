@@ -76,7 +76,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 //SERVER STARTS ETX
-
 const PORT = process.env.PORT || 9000;
 
 if (!process.env.VERCEL) {
