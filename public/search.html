@@ -1,22 +1,245 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Search</title>
-    <style>
-        body {
-          font-size: 14px;
-          color: #313030;
-        }
-      </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Search</title>
+<style>
+:root {
+  color-scheme: light dark;
+  --bg: #fbfbfd;
+  --text: #1d1d1f;
+  --secondary: #6e6e73;
+  --hairline: rgba(0, 0, 0, 0.07);
+  --surface: rgba(0, 0, 0, 0.035);
+  --link: #0066cc;
+  --glow: rgba(0, 102, 204, 0.05);
+  --select: rgba(0, 102, 204, 0.18);
+  --ease: cubic-bezier(0.32, 0.72, 0, 1);
+  --dur: 300ms;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #000000;
+    --text: #f5f5f7;
+    --secondary: #86868b;
+    --hairline: rgba(255, 255, 255, 0.1);
+    --surface: rgba(255, 255, 255, 0.07);
+    --link: #2997ff;
+    --glow: rgba(41, 151, 255, 0.1);
+    --select: rgba(41, 151, 255, 0.3);
+  }
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 120px 24px 96px;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display",
+    "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 17px;
+  line-height: 24px;
+  letter-spacing: -0.022em;
+  font-feature-settings: "ss01", "cv11";
+  font-variant-numeric: tabular-nums;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* quiet ambient glow */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(60% 45% at 50% 0%, var(--glow), transparent 70%);
+}
+
+::selection {
+  background: var(--select);
+}
+
+h1 {
+  margin: 0 0 24px;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display",
+    "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 1.125;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+  color: var(--text);
+}
+
+@supports (-webkit-background-clip: text) or (background-clip: text) {
+  h1 {
+    background: linear-gradient(180deg, var(--text) 40%, var(--secondary));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
+
+a {
+  position: relative;
+  display: block;
+  margin: 0 -16px;
+  padding: 0 16px;
+  color: var(--text);
+  text-decoration: none;
+  border-radius: 12px;
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color var(--dur) var(--ease),
+    transform var(--dur) var(--ease);
+}
+
+/* hairline divider, inset to match the row text */
+a::after {
+  content: "";
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  bottom: 0;
+  height: 1px;
+  background: var(--hairline);
+  transition: opacity var(--dur) var(--ease);
+}
+
+@media (min-resolution: 2dppx) {
+  a::after {
+    height: 0.5px;
+  }
+}
+
+a p {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0;
+  padding: 16px 0;
+  transition: transform var(--dur) var(--ease);
+}
+
+/* arrow, revealed on hover */
+a p::after {
+  content: "\2197";
+  font-size: 15px;
+  color: var(--link);
+  opacity: 0;
+  transform: translate(-4px, 4px);
+  transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
+}
+
+a:hover {
+  background: var(--surface);
+}
+
+a:hover::after {
+  opacity: 0;
+}
+
+a:hover p {
+  transform: translateX(4px);
+}
+
+a:hover p::after {
+  opacity: 1;
+  transform: translate(0, 0);
+}
+
+a:active {
+  transform: scale(0.99);
+}
+
+a:focus-visible {
+  outline: 2px solid var(--link);
+  outline-offset: 2px;
+}
+
+br {
+  display: none;
+}
+
+/* secondary action, set apart and quieter */
+a[href="upload.html"] {
+  margin-top: 40px;
+  color: var(--link);
+  font-size: 14px;
+  letter-spacing: -0.016em;
+}
+
+a[href="upload.html"]::after {
+  display: none;
+}
+
+a[href="upload.html"] p {
+  justify-content: flex-start;
+}
+
+a[href="upload.html"] p::after {
+  content: "\203A";
+  margin-left: 4px;
+  opacity: 1;
+  transform: none;
+}
+
+/* one orchestrated entrance */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+h1,
+a {
+  animation: rise 500ms var(--ease) backwards;
+}
+
+a:nth-of-type(1) { animation-delay: 60ms; }
+a:nth-of-type(2) { animation-delay: 100ms; }
+a:nth-of-type(3) { animation-delay: 140ms; }
+a:nth-of-type(4) { animation-delay: 220ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  a:hover p,
+  a:active {
+    transform: none;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    padding-top: 72px;
+  }
+}
+</style>
 </head>
 <body>
-    <h1>Search URLs</h1>
-    <a href="davis.html"><p>Miles Davis</p></a>
-    <a href="index.html"><p>Dizzie G</p></a>
-    <a href="richard.html"><p>Little Rich</p></a>
+<h1>Your Search Results</h1>
+<a href="davis.html"><p>Miles Davis</p></a>
+<a href="index.html"><p>Dizzie G</p></a>
+<a href="richard.html"><p>Little Rich</p></a>
 <br>
-    <a href="upload.html"><p>Update Your Profile</p></a>
+<a href="upload.html"><p>Update Your Profile</p></a>
 </body>
 </html>
