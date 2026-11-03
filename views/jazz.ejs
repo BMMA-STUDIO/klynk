@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= data.subject.name %></title>
+</head>
+<body>
+
+    <header>
+        <h1><%= data.subject.name %></h1>
+        <p><%= data.subject.dates %></p>
+        <p><%= data.subject.description %></p>
+    </header>
+
+    <main>
+        <h2>Biography</h2>
+
+        <% data.biography.forEach(section => { %>
+            <section>
+                <h3><%= section.heading %></h3>
+                <p><%= section.content %></p>
+            </section>
+        <% }); %>
+    </main>
+
+</body>
+</html>
