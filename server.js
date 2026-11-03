@@ -4,6 +4,29 @@ const path = require('path');
 
 const app = express();
 
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+
+//JSON Handling variables
+const jazz = {
+  subject: {
+    name: "Miles Davis",
+    dates: "1926–1991",
+    description: "American jazz trumpeter, composer and bandleader"
+  },
+  biography: [
+    {
+      heading: "Early Life",
+      content: "Miles Davis was born in Alton, Illinois, in 1926."
+    },
+    {
+      heading: "Birth of the Cool",
+      content: "Davis helped establish the cool jazz movement."
+    }
+  ]
+};
+
+//Content folder path
 const CONTENT = path.join(__dirname, 'content');
 
 //one of the main functions to get the object from the content folder
@@ -74,6 +97,10 @@ app.get('/md/:id', (req, res) => {
 // Serve static files from the "public" directory
 app.use(express.static(path.join(__dirname, 'public')));
 
+//EJS views
+app.get('/jazz', (req, res) => {
+  res.render('jazz', { data: jazz });
+});
 
 //SERVER STARTS ETX
 const PORT = process.env.PORT || 9000;
