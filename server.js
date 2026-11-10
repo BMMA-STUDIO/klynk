@@ -2,29 +2,17 @@ const express = require('express');
 const fs = require('fs');
 const path = require('path');
 
+//JSON data imports
+const duke = require('./data/duke');
+const jazz = require('./data/jazz');
+
 const app = express();
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
-//JSON Handling variables
-const jazz = {
-  subject: {
-    name: "Miles Davis",
-    dates: "1926–1991",
-    description: "American jazz trumpeter, composer and bandleader"
-  },
-  biography: [
-    {
-      heading: "Early Life",
-      content: "Miles Davis was born in Alton, Illinois, in 1926."
-    },
-    {
-      heading: "Birth of the Cool",
-      content: "Davis helped establish the cool jazz movement."
-    }
-  ]
-};
+//JSON Handling variables - sourced from /data
+
 
 //Content folder path
 const CONTENT = path.join(__dirname, 'content');
@@ -100,6 +88,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 //EJS views
 app.get('/jazz', (req, res) => {
   res.render('jazz', { data: jazz });
+});
+
+app.get('/duke', (req, res) => {
+  res.render('duke', { data: duke });
 });
 
 //SERVER STARTS ETX
