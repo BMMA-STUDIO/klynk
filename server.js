@@ -94,6 +94,10 @@ app.get('/duke', (req, res) => {
   res.render('duke', { data: duke });
 });
 
+app.get('/create', (req, res) => {
+  res.render('create', { data: null });
+});
+
 //SERVER STARTS ETX
 const PORT = process.env.PORT || 9000;
 
