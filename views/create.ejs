@@ -1,0 +1,300 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Resource</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 64px 24px;
+      background: #f5f5f5;
+      color: #222;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display",
+                   "Segoe UI", sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    main {
+      width: 100%;
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 48px;
+      background: #fff;
+      border: 1px solid rgba(0, 0, 0, 0.045);
+      border-radius: 28px;
+      box-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.025),
+        0 18px 48px rgba(0, 0, 0, 0.045);
+    }
+
+    header {
+      margin-bottom: 42px;
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-size: 32px;
+      line-height: 1.15;
+      font-weight: 650;
+      letter-spacing: -1.2px;
+    }
+
+    header p {
+      margin: 0;
+      color: #888;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    .field {
+      margin-bottom: 30px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: -0.1px;
+    }
+
+    input,
+    textarea {
+      display: block;
+      width: 100%;
+      padding: 16px 18px;
+      border: 1px solid #e5e5e5;
+      border-radius: 14px;
+      background: #fafafa;
+      color: #222;
+      font: inherit;
+      font-size: 15px;
+      line-height: 1.55;
+      outline: none;
+      transition:
+        border-color 180ms ease,
+        background 180ms ease,
+        box-shadow 180ms ease;
+    }
+
+    input {
+      min-height: 54px;
+    }
+
+    textarea {
+      min-height: 116px;
+      resize: vertical;
+    }
+
+    input:hover,
+    textarea:hover {
+      border-color: #d5d5d5;
+    }
+
+    input:focus,
+    textarea:focus {
+      background: #fff;
+      border-color: #aaa;
+      box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.035);
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+      color: #aaa;
+    }
+
+    .preview-section {
+      margin-top: 42px;
+      padding-top: 30px;
+      border-top: 1px solid #eee;
+    }
+
+    .preview-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+
+    .preview-heading label {
+      margin: 0;
+    }
+
+    .status {
+      padding: 6px 11px;
+      border-radius: 20px;
+      background: #edf5ee;
+      color: #47744d;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.2px;
+    }
+
+    #preview {
+      min-height: 220px;
+      padding: 20px;
+      border: 1px solid #eee;
+      border-radius: 16px;
+      background: #f8f8f8;
+      color: #666;
+      font-family: "SFMono-Regular", Consolas, monospace;
+      font-size: 12px;
+      line-height: 1.8;
+    }
+
+    button {
+      width: 100%;
+      min-height: 56px;
+      margin-top: 28px;
+      border: 0;
+      border-radius: 16px;
+      background: #222;
+      color: #fff;
+      font: inherit;
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: -0.2px;
+      cursor: pointer;
+      transition:
+        transform 180ms ease,
+        box-shadow 180ms ease,
+        opacity 180ms ease;
+    }
+
+    button:hover {
+      box-shadow: 0 7px 18px rgba(0, 0, 0, 0.13);
+      transform: translateY(-1px);
+    }
+
+    button:active {
+      transform: scale(0.99);
+      box-shadow: none;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 24px 14px;
+      }
+
+      main {
+        padding: 30px 22px;
+        border-radius: 23px;
+      }
+
+      h1 {
+        font-size: 28px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <header>
+      <h1>Create a source</h1>
+      <p>Add the essential information. Your resource will be structured automatically.</p>
+    </header>
+
+    <form action="/resource" method="POST">
+      <div class="field">
+        <label for="name">Name</label>
+        <input
+          type="text"
+          id="name"
+          placeholder="e.g. Duke Ellington"
+          required
+        >
+      </div>
+
+      <div class="field">
+        <label for="bio">Bio</label>
+        <textarea
+          id="bio"
+          placeholder="A short introduction..."
+        ></textarea>
+      </div>
+
+      <div class="field">
+        <label for="workedWith">Worked with</label>
+        <textarea
+          id="workedWith"
+          placeholder="Enter one name per line..."
+        ></textarea>
+      </div>
+
+      <div class="field">
+        <label for="yearsActive">Years active</label>
+        <input
+          type="text"
+          id="yearsActive"
+          placeholder="e.g. 1923–1974"
+        >
+      </div>
+
+      <section class="preview-section">
+        <div class="preview-heading">
+          <label for="preview">Generated JSON</label>
+          <span class="status">Live preview</span>
+        </div>
+
+        <textarea id="preview" readonly></textarea>
+      </section>
+
+      <input type="hidden" name="document" id="document">
+
+      <button type="submit">Create resource</button>
+    </form>
+  </main>
+
+  <script>
+    const fields = ['name', 'bio', 'workedWith', 'yearsActive'];
+
+    function generateJSON() {
+      const name = document.getElementById('name').value.trim();
+
+      const id = name.toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-|-$/g, '');
+
+      const workedWith = document.getElementById('workedWith')
+        .value.split('\n')
+        .map(item => item.trim())
+        .filter(Boolean);
+
+      return {
+        _id: id,
+        type: 'musician',
+        name,
+        bio: document.getElementById('bio').value.trim(),
+        workedWith,
+        yearsActive: document.getElementById('yearsActive').value.trim()
+      };
+    }
+
+    function updatePreview() {
+      document.getElementById('preview').value =
+        JSON.stringify(generateJSON(), null, 2);
+    }
+
+    fields.forEach(id => {
+      document.getElementById(id).addEventListener('input', updatePreview);
+    });
+
+    document.querySelector('form').addEventListener('submit', () => {
+      document.getElementById('document').value =
+        JSON.stringify(generateJSON());
+    });
+
+    updatePreview();
+  </script>
+</body>
+</html>
